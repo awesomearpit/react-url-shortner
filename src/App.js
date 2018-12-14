@@ -4,33 +4,25 @@ import UrlShortner from "./Components/UrlShortnerTitle";
 import ShortningUrlBox from "./Components/ShortningUrlBox";
 import ShortenerBtn from "./Components/ShortenerBtn";
 import ShortUrl from "./Components/ShortUrl";
-
-const URL =
-  "http://api.bitly.com/v3/shorten?login=o_2rbg6sd5jn&apikey=R_0bd2e6a02eeb4b20a79de9535d0be4b0&longUrl=";
+import { URL } from "./config.js";
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: [],
       value: "",
-      setUrl: ""
+      shortUrl: ""
     };
     this.clickHandler = this.clickHandler.bind(this);
   }
   clickHandler() {
-    console.log(this.state.value);
     fetch(URL + this.state.value)
       .then(response => response.json())
-      .then(findResponse => {
+      .then(response => {
         this.setState({
-          data: findResponse,
-          setUrl: this.state.data["data"]["url"]
+          shortUrl: response.data.url
         });
-        // const setUrl = this.state.data["data"]["url"];
-        console.log("data", this.state.data);
-        console.log("data", this.state.data["data"]["url"]);
       });
   }
   onUpdate = value => {
@@ -42,7 +34,7 @@ class App extends Component {
         <UrlShortner />
         <ShortningUrlBox placeholder={"Enter Url"} onUpdate={this.onUpdate} />
         <ShortenerBtn handler={this.clickHandler} btnName={"Shorten It!!"} />
-        <ShortUrl shortUrl={this.state.setUrl} />
+        <ShortUrl shortUrl={this.state.shortUrl} />
       </div>
     );
   }
