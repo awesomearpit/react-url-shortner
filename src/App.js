@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import "./App.css";
-import UrlShortner from "./Components/UrlShortner";
+import UrlShortner from "./Components/UrlShortnerTitle";
 import ShortningUrlBox from "./Components/ShortningUrlBox";
 import ShortenerBtn from "./Components/ShortenerBtn";
+import ShortUrl from "./Components/ShortUrl";
 
-const URL = "http://api.bitly.com/v3/shorten?callback=? ";
+const URL =
+  "http://api.bitly.com/v3/shorten?login=o_2rbg6sd5jn&apikey=R_0bd2e6a02eeb4b20a79de9535d0be4b0&longUrl=";
 
 class App extends Component {
   constructor(props) {
@@ -12,31 +14,23 @@ class App extends Component {
 
     this.state = {
       data: [],
-      value: ""
+      value: "",
+      setUrl: ""
     };
     this.clickHandler = this.clickHandler.bind(this);
   }
   clickHandler() {
-    // console.log(this.state.value);
-    fetch(URL, {
-      method: "post",
-      body: {
-        format: "json",
-        apiKey: "R_0bd2e6a02eeb4b20a79de9535d0be4b0",
-        login: "o_2rbg6sd5jn",
-        longUrl: this.state.value
-      }
-    })
-      .then(response =>
-        response.json().then(data => ({ status: response.status, body: data }))
-      )
+    console.log(this.state.value);
+    fetch(URL + this.state.value)
+      .then(response => response.json())
       .then(findResponse => {
-        console.log();
         this.setState({
-          data: findResponse
+          data: findResponse,
+          setUrl: this.state.data["data"]["url"]
         });
-        // console.log("this.state.data");
+        // const setUrl = this.state.data["data"]["url"];
         console.log("data", this.state.data);
+        console.log("data", this.state.data["data"]["url"]);
       });
   }
   onUpdate = value => {
@@ -48,6 +42,7 @@ class App extends Component {
         <UrlShortner />
         <ShortningUrlBox placeholder={"Enter Url"} onUpdate={this.onUpdate} />
         <ShortenerBtn handler={this.clickHandler} btnName={"Shorten It!!"} />
+        <ShortUrl shortUrl={this.state.setUrl} />
       </div>
     );
   }

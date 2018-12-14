@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class UrlShortner extends Component {
+class UrlShortnerTitle extends Component {
   render() {
     return (
       <div>
@@ -10,4 +10,4 @@ class UrlShortner extends Component {
   }
 }
 
-export default UrlShortner;
+export default UrlShortnerTitle;
