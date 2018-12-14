@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 class ShortenerBtn extends Component {
-  constructor(props) {
-    super(props);
-  }
   render() {
     return (
       <div className="col-6 offset-3">

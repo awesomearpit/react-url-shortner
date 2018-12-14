@@ -4,7 +4,7 @@ import UrlShortner from "./Components/UrlShortner";
 import ShortningUrlBox from "./Components/ShortningUrlBox";
 import ShortenerBtn from "./Components/ShortenerBtn";
 
-const URL = "https://tinyurl.com/api-create.php?url=";
+const URL = "http://api.bitly.com/v3/shorten?callback=? ";
 
 class App extends Component {
   constructor(props) {
@@ -17,21 +17,25 @@ class App extends Component {
     this.clickHandler = this.clickHandler.bind(this);
   }
   clickHandler() {
-    console.log(this.state.value);
-    fetch(URL + this.state.value, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": "*"
+    // console.log(this.state.value);
+    fetch(URL, {
+      method: "post",
+      body: {
+        format: "json",
+        apiKey: "R_0bd2e6a02eeb4b20a79de9535d0be4b0",
+        login: "o_2rbg6sd5jn",
+        longUrl: this.state.value
       }
     })
-      .then(response => response.body)
+      .then(response =>
+        response.json().then(data => ({ status: response.status, body: data }))
+      )
       .then(findResponse => {
-        console.log(findResponse);
+        console.log();
         this.setState({
           data: findResponse
         });
-        console.log("this.state.data");
+        // console.log("this.state.data");
         console.log("data", this.state.data);
       });
   }

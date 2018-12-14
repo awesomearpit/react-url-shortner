@@ -11,6 +11,7 @@ class ShortningUrlBox extends Component {
   update = e => {
     this.props.onUpdate(e.target.value);
     this.setState({ value: e.target.value });
+    console.log("value", this.state.value);
   };
   render() {
     return (
